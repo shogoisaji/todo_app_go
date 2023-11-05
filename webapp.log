@@ -1,0 +1,12 @@
+2023/11/03 17:48:02 main.go:15: test
+2023/11/03 18:31:20 base.go:36: Binary was compiled with 'CGO_ENABLED=0', go-sqlite3 requires cgo to work. This is a stub
+2023/11/03 18:33:35 base.go:36: Binary was compiled with 'CGO_ENABLED=0', go-sqlite3 requires cgo to work. This is a stub
+2023/11/03 18:37:18 base.go:36: Binary was compiled with 'CGO_ENABLED=0', go-sqlite3 requires cgo to work. This is a stub
+2023/11/03 18:37:32 base.go:36: Binary was compiled with 'CGO_ENABLED=0', go-sqlite3 requires cgo to work. This is a stub
+2023/11/03 18:40:39 base.go:36: Binary was compiled with 'CGO_ENABLED=0', go-sqlite3 requires cgo to work. This is a stub
+2023/11/04 11:25:13 users.go:27: sql: converting argument $1 type: unsupported type func() uuid.UUID, a func
+2023/11/04 15:58:41 users.go:89: near "VALUES": syntax error
+2023/11/04 16:03:36 users.go:89: near "VALUES": syntax error
+2023/11/04 16:03:36 main.go:19: sql: no rows in result set
+2023/11/04 17:11:13 route_auth.go:49: sql: no rows in result set
+2023/11/04 17:11:13 server.go:3214: http: superfluous response.WriteHeader call from todo_app_go/app/models/controllers.authenticate (route_auth.go:65)
