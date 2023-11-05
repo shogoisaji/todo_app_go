@@ -16,7 +16,7 @@ func (u *User) CreateTodo(content string) (err error) {
 	cmd := `INSERT INTO todos (
 		content,
 		user_id,
-		created_at) VALUES (?, ?, ?)`
+		created_at) VALUES ($1, $2, $3)`
 	_, err = Db.Exec(cmd, content, u.ID, time.Now())
 	if err != nil {
 		log.Fatalln(err)
@@ -25,7 +25,7 @@ func (u *User) CreateTodo(content string) (err error) {
 }
 
 func GetTodo(id int) (todo Todo, err error) {
-	cmd := `SELECT id, content, user_id, created_at FROM todos WHERE id = ?`
+	cmd := `SELECT id, content, user_id, created_at FROM todos WHERE id = $1`
 	todo = Todo{}
 	err = Db.QueryRow(cmd, id).Scan(
 		&todo.ID,
@@ -59,7 +59,7 @@ func GetTodos() (todos []Todo, err error) {
 }
 
 func (u *User) GetTodosByUser() (todos []Todo, err error) {
-	cmd := `SELECT id, content, user_id, created_at FROM todos WHERE user_id = ?`
+	cmd := `SELECT id, content, user_id, created_at FROM todos WHERE user_id = $1`
 	rows, err := Db.Query(cmd, u.ID)
 	if err != nil {
 		log.Fatalln(err)
@@ -81,7 +81,7 @@ func (u *User) GetTodosByUser() (todos []Todo, err error) {
 }
 
 func (t *Todo) UpdateTodo() error {
-	cmd := `UPDATE todos SET content = ?, user_id = ? WHERE id = ?`
+	cmd := `UPDATE todos SET content = $1, user_id = $2 WHERE id = $3`
 	_, err := Db.Exec(cmd, t.Content, t.UserID, t.ID)
 	if err != nil {
 		log.Fatalln(err)
@@ -90,7 +90,7 @@ func (t *Todo) UpdateTodo() error {
 }
 
 func (t *Todo) DeleteTodo() error {
-	cmd := `DELETE FROM todos WHERE id = ?`
+	cmd := `DELETE FROM todos WHERE id = $1`
 	_, err := Db.Exec(cmd, t.ID)
 	if err != nil {
 		log.Fatalln(err)

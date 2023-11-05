@@ -5,24 +5,35 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"todo_app_go/config"
 
 	"github.com/google/uuid"
-	_ "github.com/google/uuid"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/lib/pq"
 )
 
 var Db *sql.DB
 
 var err error
 
+/*
 const (
 	tableNameUser    = "users"
 	tableNameTodo    = "todos"
 	tableNameSession = "sessions"
 )
+*/
 
 func init() {
+	url := os.Getenv("DATABASE_URL")
+	connection, _ := pq.ParseURL(url)
+	connection += " sslmode=require"
+	Db, err = sql.Open(config.Config.SQLDriver, connection)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	/*  sqlite3
 	Db, err = sql.Open(config.Config.SQLDriver, config.Config.DbName)
 	if err != nil {
 		log.Fatalln(err)
@@ -60,12 +71,15 @@ func init() {
 		created_at DATETIME)`, tableNameSession)
 
 	Db.Exec(cmdS)
+	*/
 }
 
 func createUUID() (uuidobj uuid.UUID) {
 	uuidobj, _ = uuid.NewUUID()
 	return uuidobj
+
 }
+
 
 func Encrypt(plaintext string) (cryptext string) {
 	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
